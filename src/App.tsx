@@ -20,10 +20,12 @@ import { triggerPetalCelebration } from './components/PetalShower';
 import { soundEngine } from './utils/audio';
 import { PersonalizeModal } from './components/PersonalizeModal';
 import { exportCardAsImage } from './utils/exportCard';
+import { ButterflyNameFormation } from './components/ButterflyNameFormation';
 
 export default function App() {
   const [lightingMode, setLightingMode] = useState<'blush' | 'golden' | 'twilight'>('blush');
   const [isPersonalizeOpen, setIsPersonalizeOpen] = useState(false);
+  const [isNameFormationOpen, setIsNameFormationOpen] = useState(false);
   const [customMessage, setCustomMessage] = useState(
     'Dearest Amma, thank you for your boundless grace, comforting warmth, and the selfless love that brightens every corner of our lives. May this year shower you with vibrant health, serene peace, sweet laughter, and all the radiant happiness your heart can hold.'
   );
@@ -140,6 +142,17 @@ export default function App() {
         <div className="flex items-center gap-1.5 sm:gap-2.5">
           <button
             type="button"
+            onClick={() => setIsNameFormationOpen(true)}
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-amber-950 bg-gradient-to-r from-amber-200 via-rose-200 to-purple-200 hover:from-amber-300 hover:to-purple-300 border border-amber-300/80 shadow-2xs active:scale-95 transition-all touch-manipulation"
+            title="Watch 100+ butterflies form Mom's name"
+          >
+            <span>🦋</span>
+            <span className="hidden sm:inline">Spell "Revathi"</span>
+            <span className="sm:hidden">Name</span>
+          </button>
+
+          <button
+            type="button"
             onClick={triggerPetalCelebration}
             className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-white bg-gradient-to-r from-rose-400 via-pink-400 to-purple-400 hover:from-rose-500 hover:to-purple-500 shadow-xs hover:shadow-sm active:scale-95 transition-all touch-manipulation"
             title="Shower rose petals and golden sparkles"
@@ -217,6 +230,7 @@ export default function App() {
             customMessage={customMessage}
             lightingMode={lightingMode}
             onOpenPersonalize={() => setIsPersonalizeOpen(true)}
+            onOpenNameFormation={() => setIsNameFormationOpen(true)}
           />
 
           {/* Secondary Quick Share / Status Toast */}
@@ -318,6 +332,15 @@ export default function App() {
               <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
                 <button
                   type="button"
+                  onClick={() => setIsNameFormationOpen(true)}
+                  className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold text-slate-900 bg-gradient-to-r from-amber-300 via-rose-300 to-purple-300 hover:from-amber-400 hover:to-purple-400 border border-white/90 shadow-md hover:shadow-lg active:scale-95 transition-all min-h-[42px] touch-manipulation"
+                >
+                  <span className="text-sm">🦋</span>
+                  <span>Butterflies Form "Revathi"</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={triggerPetalCelebration}
                   className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 shadow-md hover:shadow-lg active:scale-95 transition-all min-h-[42px] touch-manipulation"
                 >
@@ -382,6 +405,13 @@ export default function App() {
         lightingMode={lightingMode}
         onSelectLighting={(mode) => setLightingMode(mode)}
         onExportCard={handleExport}
+      />
+
+      {/* Butterfly Constellation forming Mom's name: REVATHI / AMMA REVATHI */}
+      <ButterflyNameFormation
+        isOpen={isNameFormationOpen}
+        onClose={() => setIsNameFormationOpen(false)}
+        defaultText="REVATHI"
       />
     </div>
   );

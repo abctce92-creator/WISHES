@@ -6,6 +6,7 @@ import { triggerButterflies } from './ButterflyEffect';
 
 interface Card3DProps {
   onOpenPersonalize?: () => void;
+  onOpenNameFormation?: () => void;
   customMessage?: string;
   lightingMode?: 'blush' | 'golden' | 'twilight';
   cardRef?: React.RefObject<HTMLDivElement | null>;
@@ -13,6 +14,7 @@ interface Card3DProps {
 
 export const Card3D: React.FC<Card3DProps> = ({
   onOpenPersonalize,
+  onOpenNameFormation,
   customMessage,
   lightingMode = 'blush',
   cardRef,
@@ -477,6 +479,19 @@ export const Card3D: React.FC<Card3DProps> = ({
           <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span>Shower Petals</span>
         </button>
+
+        {/* Spell Mom's Name with Swarm of Butterflies */}
+        {onOpenNameFormation && (
+          <button
+            type="button"
+            onClick={onOpenNameFormation}
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-amber-300 via-rose-300 to-purple-300 hover:from-amber-400 hover:to-purple-400 text-slate-900 font-sans-clean text-xs font-bold tracking-wide shadow-md hover:shadow-lg active:scale-95 transition-all border border-white/90 min-h-[42px] touch-manipulation"
+            title="Watch 100+ butterflies form Mom's name (Revathi)"
+          >
+            <span className="text-sm">🦋</span>
+            <span>Spell "Revathi"</span>
+          </button>
+        )}
 
         {/* Release Pastel Butterflies */}
         <button
