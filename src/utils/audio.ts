@@ -67,6 +67,40 @@ class SoundEngine {
     }
   }
 
+  // Soft fluttering chime when butterflies take flight
+  public playFlutterChime() {
+    if (this.isMuted) return;
+    try {
+      this.initContext();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      // Arpeggiated fluttering shimmer
+      const chord = [1318.5, 1567.98, 1760.0, 2093.0, 2637.0]; // E6, G6, A6, C7, E7
+      chord.forEach((freq, i) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const startTime = now + i * 0.035;
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, startTime);
+
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.linearRampToValueAtTime(0.035, startTime + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.00001, startTime + 0.55);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + 0.6);
+      });
+    } catch {
+      // Audio playback safety
+    }
+  }
+
   // Soft romantic music-box tone for individual note
   private playMusicBoxNote(freq: number, startTime: number, duration: number = 1.2) {
     if (!this.ctx || this.isMuted) return;

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Card3D } from './components/Card3D';
 import { SparkleDustCanvas } from './components/SparkleDustCanvas';
+import { ButterflyEffect, triggerButterflies } from './components/ButterflyEffect';
 import { triggerPetalCelebration } from './components/PetalShower';
 import { soundEngine } from './utils/audio';
 import { PersonalizeModal } from './components/PersonalizeModal';
@@ -70,6 +71,9 @@ export default function App() {
       {/* Interactive Golden Sparkle Dust Canvas (Drifting stardust & cursor fairy dust) */}
       <SparkleDustCanvas />
 
+      {/* 3D Fluttering Butterfly Animation for Button Clicks and Interactive Spawns */}
+      <ButterflyEffect />
+
       {/* Atmospheric Ambient Floral Backdrop with Soft Studio Lighting */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Ambient Generated Backdrop Image with Atmospheric Blend */}
@@ -89,7 +93,7 @@ export default function App() {
       {/* ========================================================================= */}
       {/* TOP NAVIGATION BAR (Strict 3-zone Top Bar Contract)                       */}
       {/* ========================================================================= */}
-      <header className="relative z-30 flex items-center justify-between px-6 sm:px-10 py-4.5 border-b border-pink-100/80 bg-white/60 backdrop-blur-md">
+      <header className="relative z-30 flex items-center justify-between px-3.5 sm:px-10 py-3 sm:py-4.5 border-b border-pink-100/80 bg-white/70 backdrop-blur-md">
         {/* Zone 1: Single text element wordmark in display face */}
         <a
           href="#"
@@ -97,7 +101,7 @@ export default function App() {
             e.preventDefault();
             soundEngine.playSparkle();
           }}
-          className="font-script text-2xl sm:text-3xl text-amber-900 hover:text-amber-800 transition-colors tracking-wide"
+          className="font-script text-xl sm:text-3xl text-amber-900 hover:text-amber-800 transition-colors tracking-wide shrink-0"
         >
           Amma Revathi
         </a>
@@ -133,16 +137,34 @@ export default function App() {
         </nav>
 
         {/* Zone 3: 1-2 primary actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
           <button
             type="button"
             onClick={triggerPetalCelebration}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-gradient-to-r from-rose-400 via-pink-400 to-purple-400 hover:from-rose-500 hover:to-purple-500 shadow-xs hover:shadow-sm transition-all"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-white bg-gradient-to-r from-rose-400 via-pink-400 to-purple-400 hover:from-rose-500 hover:to-purple-500 shadow-xs hover:shadow-sm active:scale-95 transition-all touch-manipulation"
             title="Shower rose petals and golden sparkles"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span className="hidden sm:inline">Shower Petals</span>
-            <span className="sm:hidden">Celebrate</span>
+            <span className="sm:hidden">Petals</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              triggerButterflies(rect.left + rect.width / 2, rect.top + rect.height / 2, 7);
+            }}
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-purple-900 bg-purple-100/90 hover:bg-purple-200/90 border border-purple-200/70 shadow-2xs active:scale-95 transition-colors touch-manipulation"
+            title="Release fluttering 3D pastel butterflies"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-600">
+              <path d="M12 7c-2-4-8-4-9 1s3 8 9 4c6 4 10 1 9-4s-7-5-9-1z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 12c-2 2-6 5-6 8s5 2 6-3c1 5 6 3 6-3s-4-6-6-8z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 5v14" strokeLinecap="round" />
+            </svg>
+            <span className="hidden sm:inline">Butterflies</span>
+            <span className="sm:hidden">Flutter</span>
           </button>
 
           <button
@@ -158,14 +180,14 @@ export default function App() {
           <button
             type="button"
             onClick={handleToggleMute}
-            className="p-1.5 rounded-full text-slate-500 hover:text-slate-800 bg-white/60 hover:bg-white border border-slate-200/60 transition-colors"
+            className="p-1.5 rounded-full text-slate-500 hover:text-slate-800 bg-white/60 hover:bg-white border border-slate-200/60 transition-colors touch-manipulation active:scale-95"
             title={isMuted ? 'Unmute' : 'Mute'}
             aria-label={isMuted ? 'Unmute' : 'Mute'}
           >
             {isMuted ? (
-              <VolumeX className="w-4 h-4 text-rose-500" />
+              <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500" />
             ) : (
-              <Volume2 className="w-4 h-4 text-emerald-600" />
+              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600" />
             )}
           </button>
         </div>
@@ -178,10 +200,10 @@ export default function App() {
         {/* ========================================================================= */}
         <section
           id="card-section"
-          className="relative pt-6 sm:pt-10 pb-16 px-4 flex flex-col items-center justify-center min-h-[calc(100vh-80px)]"
+          className="relative pt-3 sm:pt-8 pb-10 sm:pb-16 px-2 sm:px-4 flex flex-col items-center justify-center min-h-[calc(100vh-65px)]"
         >
           {/* Subtle Ambient Title Kicker (Zero-Pill Clean Typography) */}
-          <div className="flex items-center gap-2 text-xs font-sans-clean font-medium tracking-[0.25em] uppercase text-rose-800/70 mb-4 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-sans-clean font-medium tracking-[0.18em] sm:tracking-[0.25em] uppercase text-rose-800/70 mb-2 sm:mb-4 text-center px-2">
             <span>Special Birthday Edition</span>
             <span aria-hidden="true" className="text-amber-400">·</span>
             <span>Handcrafted with Love</span>
@@ -199,8 +221,8 @@ export default function App() {
 
           {/* Secondary Quick Share / Status Toast */}
           {copyFeedback && (
-            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-medium shadow-lg animate-fadeIn">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-medium shadow-lg animate-fadeIn max-w-[90%] text-center">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Card URL copied to clipboard! Share with family.</span>
             </div>
           )}
@@ -211,16 +233,16 @@ export default function App() {
         {/* ========================================================================= */}
         <section
           id="tribute-section"
-          className="relative py-20 px-6 sm:px-12 max-w-5xl mx-auto border-t border-pink-100/60"
+          className="relative py-12 sm:py-20 px-4 sm:px-12 max-w-5xl mx-auto border-t border-pink-100/60"
         >
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <p className="text-xs font-sans-clean tracking-[0.25em] uppercase text-amber-800 font-semibold mb-2">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 px-2">
+            <p className="text-[10px] sm:text-xs font-sans-clean tracking-[0.2em] sm:tracking-[0.25em] uppercase text-amber-800 font-semibold mb-1.5 sm:mb-2">
               A Symphony of Gratitude
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 font-normal">
-              To Our Beloved Mother, <span className="font-script text-4xl sm:text-5xl text-amber-900 gold-subtle-text">Amma Revathi</span>
+            <h2 className="font-serif text-2xl sm:text-4xl text-slate-900 font-normal">
+              To Our Beloved Mother, <span className="font-script text-3xl sm:text-5xl text-amber-900 gold-subtle-text block sm:inline mt-1 sm:mt-0">Amma Revathi</span>
             </h2>
-            <p className="text-sm font-cormorant text-slate-600 italic text-base sm:text-lg mt-3">
+            <p className="font-cormorant text-slate-600 italic text-sm sm:text-lg mt-2 sm:mt-3 leading-relaxed">
               "A mother's love is the gentle garden where happiness takes root and blooms into a lifetime of blessings."
             </p>
           </div>
@@ -293,11 +315,11 @@ export default function App() {
               </p>
 
               {/* Celebration CTAs */}
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
                 <button
                   type="button"
                   onClick={triggerPetalCelebration}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 shadow-md hover:shadow-lg transition-all"
+                  className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 shadow-md hover:shadow-lg active:scale-95 transition-all min-h-[42px] touch-manipulation"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Shower Blessings & Flowers</span>
@@ -305,8 +327,24 @@ export default function App() {
 
                 <button
                   type="button"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    triggerButterflies(rect.left + rect.width / 2, rect.top + rect.height / 2, 8);
+                  }}
+                  className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold text-slate-800 bg-gradient-to-r from-purple-200 via-pink-200 to-emerald-200 hover:from-purple-300 hover:to-pink-300 border border-white/80 shadow-md hover:shadow-lg active:scale-95 transition-all min-h-[42px] touch-manipulation"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 text-purple-700">
+                    <path d="M12 7c-2-4-8-4-9 1s3 8 9 4c6 4 10 1 9-4s-7-5-9-1z" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12 12c-2 2-6 5-6 8s5 2 6-3c1 5 6 3 6-3s-4-6-6-8z" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12 5v14" strokeLinecap="round" />
+                  </svg>
+                  <span>Release Butterflies</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={handleExport}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-xs transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-xs active:scale-95 transition-colors min-h-[42px] touch-manipulation"
                 >
                   <Download className="w-4 h-4 text-slate-500" />
                   <span>Download High-Res Card Image</span>
