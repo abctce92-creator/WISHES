@@ -1,0 +1,6 @@
+{
+  "name": "3D Pastel Floral Birthday Card",
+  "description": "A stunning, modern 3D pastel floral digital birthday card with glassmorphism, holographic foil accents, realistic ambient lighting, and elegant typography for Amma Revathi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
